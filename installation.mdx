@@ -1,0 +1,106 @@
+---
+title: "Installation"
+description: "Complete installation guide for deploying Arcbeam using Docker Compose"
+---
+
+# Installation
+
+This guide walks you through deploying Arcbeam using Docker Compose.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- [Docker](https://www.docker.com/products/docker-desktop) installed and running
+- Optional: Your own Postgres database (Arcbeam includes one by default)
+
+## System Requirements
+
+### System Resources
+
+- At least 4 CPU cores
+- 16 GB RAM minimum
+
+### Open Ports
+
+Make sure these ports aren't already in use:
+
+- `5432` - Postgres database
+- `3000` - Arcbeam UI
+
+## Setup
+
+Create a file named `docker-compose.yml` and paste the following configuration.
+
+<Note>
+If you want to provide your own Postgres database, update the `DATABASE_URL` environment variable below.
+</Note>
+
+```yaml
+name: arcbeam-deployment
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: arcbeam
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    image: arcbeameng/arcbeam:betav0.0.5
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/arcbeam
+      BETTER_AUTH_SECRET: k+l+mAvW3IZgI3HIflO0XlGGv3QP2C321zG7YhQpavA= # or run `openssl rand -base64 32`
+      ORIGIN: http://localhost:3000
+      ARCBEAM_SINGLE_TENANT_MODE: true
+      ARCBEAM_DEFAULT_EMAIL: admin@arcbeam.ai
+      ARCBEAM_DEFAULT_PASSWORD: admin
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+```
+
+### Start the Stack
+
+Start the stack with the following command:
+
+```bash
+docker compose up
+```
+
+This will:
+
+1. Start Postgres on port 5432
+2. Run migrations and seed data (one-off task)
+3. Launch the web app on [http://localhost:3000](http://localhost:3000)
+
+### Stop the Stack
+
+To stop the stack, run:
+
+```bash
+docker compose down
+```
+
+<Info>
+Data will persist in the `postgres_data` volume across restarts.
+</Info>
+
+## Next Steps
+
+Once your Arcbeam deployment is running, you can [log in for the first time](/quickstart) and begin setting up your integrations.

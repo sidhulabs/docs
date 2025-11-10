@@ -1,0 +1,50 @@
+---
+title: "Troubleshooting"
+description: "Common issues, known limitations, and frequently asked questions"
+---
+
+# Troubleshooting
+
+This page covers common issues, known limitations during the private beta, and frequently asked questions.
+
+## Private Beta Known Issues
+
+During the private beta, you may notice some limitations in usage, integrations, and the user interface. These will be addressed in future releases.
+
+### Usage
+
+- **Increased latency**: Applications may experience increased latency because data enrichment is performed inline rather than in the background
+
+### Integrations
+
+- **Cannot edit integrations**: Dataset integrations cannot be edited once they are created
+- **No UI updates**: Unable to update integration details via the UI after creation
+
+### User Interface
+
+- **Date display inconsistencies**: Dates that are not provided may display inconsistently, sometimes appearing as "Just Now" or "Unknown"
+
+<Warning>
+Plan your integration configuration carefully before saving, as you cannot edit it afterward during the private beta.
+</Warning>
+
+## FAQ
+
+### Failed to save integration. Please try again.
+
+If you are getting this error, the `ORIGIN` environment variable is most likely not set up correctly on the web service component.
+
+**Solution**: The `ORIGIN` variable should be set to the URL + port (if necessary) you see in the browser when using the platform.
+
+**Examples**:
+
+- If you are accessing the platform on your browser through `http://localhost:3000`, then `ORIGIN` should be set to `http://localhost:3000`
+- If you are accessing the platform on your browser through `https://arcbeam.ai`, then `ORIGIN` should be set to `https://arcbeam.ai`
+
+<Tip>
+Make sure the `ORIGIN` environment variable in your `docker-compose.yml` matches the URL you use to access Arcbeam in your browser.
+</Tip>
+
+## Getting Help
+
+If you have questions or need help, reach out to the Arcbeam team at [eng@arcbeam.ai](mailto:eng@arcbeam.ai).

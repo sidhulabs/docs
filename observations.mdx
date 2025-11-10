@@ -1,0 +1,82 @@
+---
+title: "Send Observations"
+description: "Track how your applications use data by sending observations to Arcbeam"
+---
+
+# Send Observations From Your Application
+
+To track how your applications are using data, you need to send observations to Arcbeam using an API key.
+
+## Create API Key
+
+Before you can send observations, you need to generate an API key:
+
+1. Navigate to the settings page by clicking on the **User icon** on the top right of the screen
+2. Click on the **API Keys** menu item on the left hand side
+3. Generate an API key from the **Create API Key** button
+
+![API key generation screen](/images/api-key.png)
+
+## Installation
+
+To capture usage, your application can use our LangChain connector to send data to the Arcbeam API whenever a query is processed.
+
+```bash
+pip install arcbeam-langchain-connector
+```
+
+For more information, visit the [arcbeam-langchain-connector on PyPI](https://pypi.org/project/arcbeam-langchain-connector/).
+
+## Minimal Python Helper
+
+Here's a basic example of how to use the connector:
+
+```python
+# Basic LLM call with tracing
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
+from arcbeam_langchain_connector import ArcbeamHandler
+
+handler = ArcbeamHandler(
+    base_url="YOUR_ARCBEAM_URL",
+    api_key="YOUR_ARCBEAM_API_KEY"
+)
+
+llm = ChatOpenAI(callbacks=[handler])
+response = llm.invoke([HumanMessage(content="What is the weather like today?")])
+print(response.content)
+
+# For chains and agents, pass handler in config
+from langchain_core.prompts import ChatPromptTemplate
+
+prompt = ChatPromptTemplate.from_template("Explain {topic} in two sentences.")
+chain = prompt | llm
+
+result = chain.invoke(
+    {"topic": "AI monitoring"},
+    config={"callbacks": [handler]}
+)
+```
+
+<Note>
+Replace `YOUR_ARCBEAM_URL` with your Arcbeam deployment URL (e.g., `http://localhost:3000`) and `YOUR_ARCBEAM_API_KEY` with the API key you generated.
+</Note>
+
+## View Results in the UI
+
+Return to the **Projects** page and select your project. You'll see each query recorded along with:
+
+- Retrieved chunks
+- Model used
+- Input and output text
+
+![Query results in the UI](/images/query-results.png)
+
+<Warning>
+During the private beta, applications may experience increased latency because data enrichment is performed inline rather than in the background.
+</Warning>
+
+## Next Steps
+
+- [Configure projects](/projects) to organize your monitoring and apply policies
+- Review observations and refine how your datasets are used

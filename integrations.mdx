@@ -1,0 +1,42 @@
+---
+title: "Setting Up Integrations"
+description: "Connect Arcbeam to your data sources to observe and track dataset usage"
+---
+
+# Setting Up Your First Integration
+
+Integrations connect Arcbeam to your data sources so the platform can observe and track dataset usage.
+
+## Adding an Integration
+
+Follow these steps to set up your first integration:
+
+1. From the left sidebar, click **Integrations**
+2. Select your preferred data source type
+3. Enter the required connection details:
+   - **Connection string**: Must be in the format `postgresql://username:password@host:port/db`
+   - **Collection/Index Name**: The table name of your embedding data
+   - **Data source column**: The column or nested field that contains the raw document name
+   - **Nested fields**: If any of the data are in nested fields, you can reference them using dot notation
+4. Click **Save** to verify the connection
+
+<Tip>
+If your data sources are in a nested field in the metadata column called `source`, you can reference it as: `metadata.source`
+</Tip>
+
+![Integration setup screen](/images/integration-setup.png)
+
+## After Connection
+
+Once connected, datasets from that source will appear in the **Datasets** view.
+
+<Warning>
+During the private beta, dataset integrations cannot be edited once they are created. Plan your configuration carefully before saving.
+</Warning>
+
+## Next Steps
+
+After setting up your integration, you can:
+
+- [Send observations from your application](/observations) to start tracking usage
+- [Configure projects](/projects) to organize your monitoring
