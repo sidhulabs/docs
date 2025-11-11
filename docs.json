@@ -11,7 +11,7 @@
   "navigation": {
     "versions": [
       {
-        "version": "0.0.0",
+        "version": "v0",
         "groups": [
           {
             "group": "Getting Started",
@@ -53,7 +53,7 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
+    "light": "/logo/light.jpg",
     "dark": "/logo/dark.svg"
   },
   "navbar": {
