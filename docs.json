@@ -3,33 +3,37 @@
   "theme": "mint",
   "name": "Arcbeam Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#002538",
+    "light": "#BFE8FE",
+    "dark": "#010609"
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "groups": [
+    "versions": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "introduction",
-          "installation",
-          "quickstart"
-        ]
-      },
-      {
-        "group": "Configuration",
-        "pages": [
-          "integrations",
-          "observations",
-          "projects"
-        ]
-      },
-      {
-        "group": "Support",
-        "pages": [
-          "troubleshooting"
+        "version": "0.0.0",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "v0/introduction",
+              "v0/quickstart"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "v0/integrations",
+              "v0/observations",
+              "v0/projects"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "v0/troubleshooting"
+            ]
+          }
         ]
       }
     ],
